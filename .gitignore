@@ -33,3 +33,6 @@ skills/
 
 # local git worktrees
 .worktrees/
+
+# local setup test cache
+.pytest_cache/

@@ -114,3 +114,40 @@ The last line, `python -m pytest`, runs the setup checks. Each test checks one p
 | `test_bob_skill_permission_is_toggled` | **Skill** is ticked in Bob's Permissions menu in your latest Bob chat on this repo (step 4) |
 
 You are ready for [DAY1.md](DAY1.md) when the last line says `all passed`. If a test fails, its message says which command to run again. Fix it and re-run `python -m pytest` until everything passes.
+
+## Windows ARM64: Bob Shell and the project environment
+
+IBM's download page currently lists Bob IDE for Windows x64, not Windows
+ARM64. The alternative for this machine is Bob Shell (CLI), which this lab
+also allows. Download it from <https://bob.ibm.com/download?bob=shell> and
+follow <https://bob.ibm.com/docs/shell/getting-started/install-and-setup>.
+Bob Shell 2.0.5 was verified to start on this machine on 2026-10-07.
+
+The local `.venv` uses Python 3.12.10 ARM64. Always run the lab from the
+`bobathon-esilv` repository root, rather than its parent folder.
+
+To start Bob with this environment from PowerShell:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\start-bob.ps1
+```
+
+The launcher puts the project's `.venv\Scripts` first on PATH for its process
+and starts `bob chat` with `--auto-approve`, as requested by this lab.
+It does not modify the Windows execution policy permanently.
+
+To check the setup without relying on activation:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip check
+.\.venv\Scripts\python.exe -m pytest tests/test_setup.py
+```
+
+The Bob permissions check reads the latest repository chat's saved settings.
+`--auto-approve` by itself does not populate the saved Skill permission in
+Bob Shell 2.0.5; configure Skill in Bob before creating a new chat and rerun
+all seven checks. Do not edit the test or Bob's database to force a pass.
+
+`.skore` contains a secret API key and must remain excluded from Git. The
+local virtual environment and installed skills are also excluded by the
+existing `.gitignore`. The launcher contains no credentials.
